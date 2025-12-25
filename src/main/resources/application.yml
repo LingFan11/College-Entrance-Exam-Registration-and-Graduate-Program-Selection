@@ -1,0 +1,59 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/xspp?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&connectionCollation=utf8mb4_general_ci
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: "111111"
+    hikari:
+      connection-init-sql: "SET NAMES utf8mb4"
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+  sql:
+    init:
+      mode: never
+
+# H2 console for dev
+server:
+  port: 8080
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+
+gaokao:
+  recommend:
+    # base and proximity
+    base-score: 50
+    proximity-max: 30
+    proximity-penalty-per100: 1
+    # preferences weights
+    pref-major: 10
+    pref-city: 5
+    pref-tier: 5
+    # bucketing thresholds (delta = candidateRank - lastYearMinRank)
+    rush-upper: -1000
+    stable-upper: 1000
+    # masking: top-N ranks do not require score, others must provide score
+    mask-top-rank: 50
+    require-score-beyond-mask: true
+    # consistency (赋分制)
+    consistency-check-enabled: true
+    consistency-tolerance-rank: 300
+    prefer-input: score   # 一致/不一致优先采用哪个，rank|score（按你的需求改为 score 优先）
+    consistency-strict: false  # 当分数与位次不一致时不抛错，按 prefer-input 采用分数侧
+    # gates（分数达线优先）
+    use-min-score-gate: true    # 开启分数达线优先
+    min-score-grace: 0        #设定容差
+    rank-grace: 0
+    # score->rank 最近邻映射（当找不到精确分数时）
+    mapping-nearest-enabled: true
+    mapping-max-score-delta: 20
+
+grad:
+  recommend:
+    top-n: 3

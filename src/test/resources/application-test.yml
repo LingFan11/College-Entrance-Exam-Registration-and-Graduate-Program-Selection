@@ -1,0 +1,47 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  sql:
+    init:
+      mode: never
+
+logging:
+  level:
+    root: WARN
+    com.lingfan.xspp: INFO
+
+gaokao:
+  recommend:
+    base-score: 50
+    proximity-max: 30
+    proximity-penalty-per100: 1
+    pref-major: 10
+    pref-city: 5
+    pref-tier: 5
+    rush-upper: -1000
+    stable-upper: 1000
+    mask-top-rank: 50
+    require-score-beyond-mask: true
+    consistency-check-enabled: false
+    consistency-tolerance-rank: 300
+    prefer-input: score
+    consistency-strict: false
+    use-min-score-gate: true
+    min-score-grace: 0
+    rank-grace: 0
+    mapping-nearest-enabled: true
+    mapping-max-score-delta: 20
+
+grad:
+  recommend:
+    top-n: 3
